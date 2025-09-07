@@ -29,7 +29,7 @@
     }
   }
 }  */
-pipeline {
+/*pipeline {
   agent none
   stages {
     stage('Checkout') {
@@ -57,6 +57,43 @@ pipeline {
       agent { docker { image 'node:16-alpine' } }
       steps {
         sh 'npm run build'
+      }
+    }
+  }
+} */
+pipeline {
+  agent {
+    docker { image 'node:16-alpine' }
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        dir('node-pipeline') {
+          sh 'npm install'
+        }
+      }
+    }
+
+    stage('Run Tests') {
+      steps {
+        dir('node-pipeline') {
+          sh 'npm test'
+        }
+      }
+    }
+
+    stage('Build') {
+      steps {
+        dir('node-pipeline') {
+          sh 'npm run build'
+        }
       }
     }
   }
