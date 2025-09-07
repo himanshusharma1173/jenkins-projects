@@ -1,4 +1,4 @@
-pipeline {
+/* pipeline {
   agent {
     docker { image 'node:16-alpine' }
   }
@@ -23,6 +23,38 @@ pipeline {
     }
 
     stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+  }
+}  */
+pipeline {
+  agent none
+  stages {
+    stage('Checkout') {
+      agent { docker { image 'node:16-alpine' } }
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Install Dependencies') {
+      agent { docker { image 'node:16-alpine' } }
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Run Tests') {
+      agent { docker { image 'node:16-alpine' } }
+      steps {
+        sh 'npm test'
+      }
+    }
+
+    stage('Build') {
+      agent { docker { image 'node:16-alpine' } }
       steps {
         sh 'npm run build'
       }
