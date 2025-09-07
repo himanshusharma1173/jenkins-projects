@@ -9,5 +9,5 @@ The Jenkins pipeline (`Jenkinsfile`) runs inside a **Node.js Docker container** 
 
 1. **Checkout** - Clones the GitHub repository  
 2. **Install Dependencies** - Runs `npm install`  
-3. **Run Tests** - Executes `npm test` (dummy test included)  
+3. **Run Tests** - Executes `npm test` 
 4. **Build** - Simulates a build step with `npm run build`
